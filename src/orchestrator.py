@@ -6,7 +6,7 @@ Orchestrator - Master process for the AI Employee system.
 The Orchestrator:
 1. Manages watcher processes (FileDrop, Gmail, WhatsApp, etc.)
 2. Monitors Needs_Action folder for items to process
-3. Triggers Claude Code to analyze and create plans
+3. Triggers Qwen Code to analyze and create plans
 4. Updates Dashboard.md with current status
 5. Handles approved actions and moves completed items to Done
 
@@ -125,7 +125,7 @@ class Orchestrator:
         Process items in the Needs_Action folder.
         
         For Bronze tier: Just count and log items.
-        For Silver/Gold: Trigger Claude Code to analyze and create plans.
+        For Silver/Gold: Trigger Qwen Code to analyze and create plans.
         """
         try:
             action_files = list(self.needs_action.glob('*.md'))
@@ -146,7 +146,7 @@ class Orchestrator:
         Process a single action item.
         
         Bronze tier: Log the item and update dashboard.
-        Silver/Gold: Call Claude Code to analyze and create plan.
+        Silver/Gold: Call Qwen Code to analyze and create plan.
         """
         try:
             content = action_file.read_text(encoding='utf-8')
@@ -161,9 +161,9 @@ class Orchestrator:
             # For Bronze tier: Just update stats and dashboard
             self.stats['items_processed'] += 1
             
-            # TODO: Silver/Gold - Call Claude Code here
+            # TODO: Silver/Gold - Call Qwen Code here
             # Example:
-            # plan = self._invoke_claude(action_file)
+            # plan = self._invoke_qwen(action_file)
             # if plan:
             #     self._create_plan(action_file, plan)
             
@@ -467,7 +467,7 @@ status: active
 
 def main():
     """Entry point for the orchestrator."""
-    vault_path = sys.argv[1] if len(sys.argv) > 1 else "."
+    vault_path = sys.argv[1] if len(sys.argv) > 1 else ".qwen"
     
     # Validate vault path
     vault = Path(vault_path).resolve()

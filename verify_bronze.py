@@ -25,14 +25,14 @@ def main():
     print("AI Employee - Bronze Tier Verification")
     print("=" * 60)
     
-    vault_path = Path("AI_Employee_Vault").resolve()
+    vault_path = Path(".qwen").resolve()
     src_path = Path("src").resolve()
     root_path = vault_path.parent
     
     all_passed = True
     
     # Check 1: Vault folder structure
-    print("\n📁 Vault Folder Structure:")
+    print("\n📁 .qwen Folder Structure:")
     required_folders = [
         "Inbox", "Needs_Action", "Done", "Plans",
         "Pending_Approval", "Approved", "Rejected", "Logs"
@@ -111,10 +111,10 @@ def main():
     if all_passed:
         print("🎉 ALL CHECKS PASSED - Bronze Tier Complete!")
         print("\nNext steps:")
-        print("  1. Open AI_Employee_Vault in Obsidian")
-        print("  2. Run: python src/orchestrator.py AI_Employee_Vault")
-        print("  3. Drop a file into AI_Employee_Vault/Inbox/")
-        print("  4. Watch the Dashboard update in real-time")
+        print("  1. Run: python src/orchestrator.py .qwen")
+        print("  2. Drop a file into .qwen/Inbox/")
+        print("  3. Watch the Dashboard update in real-time")
+        print("  4. Process with: cd .qwen && qwen \"Check Needs_Action folder\"")
     else:
         print("⚠️ SOME CHECKS FAILED - Review errors above")
     print("=" * 60)

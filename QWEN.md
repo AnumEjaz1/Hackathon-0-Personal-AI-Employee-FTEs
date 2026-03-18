@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a **hackathon project** for building a "Personal AI Employee" or "Digital FTE" (Full-Time Equivalent) - an autonomous AI agent that manages personal and business affairs 24/7. The project uses **Claude Code** as the reasoning engine and **Obsidian** (local Markdown) as the dashboard/memory system.
+This is a **hackathon project** for building a "Personal AI Employee" or "Digital FTE" (Full-Time Equivalent) - an autonomous AI agent that manages personal and business affairs 24/7. The project uses **Qwen Code** as the reasoning engine and **Obsidian** (local Markdown) as the dashboard/memory system.
 
 **Tagline:** *Your life and business on autopilot. Local-first, agent-driven, human-in-the-loop.*
 
@@ -10,7 +10,7 @@ This is a **hackathon project** for building a "Personal AI Employee" or "Digita
 
 | Layer | Component | Purpose |
 |-------|-----------|---------|
-| **Brain** | Claude Code | Reasoning engine for decision-making |
+| **Brain** | Qwen Code | Reasoning engine for decision-making |
 | **Memory/GUI** | Obsidian Vault | Local Markdown dashboard and long-term memory |
 | **Senses (Watchers)** | Python scripts | Monitor Gmail, WhatsApp, filesystems to trigger AI |
 | **Hands (MCP)** | Model Context Protocol servers | External actions (email, browser automation, payments) |
@@ -20,7 +20,7 @@ This is a **hackathon project** for building a "Personal AI Employee" or "Digita
 
 - **Watchers:** Lightweight Python scripts that run continuously, monitoring inputs and creating actionable `.md` files in `/Needs_Action` folder
 - **Human-in-the-Loop (HITL):** Sensitive actions require approval via file movement (`/Pending_Approval` → `/Approved`)
-- **Ralph Wiggum Pattern:** A Stop hook that keeps Claude iterating until tasks are complete
+- **Ralph Wiggum Pattern:** A Stop hook that keeps Qwen iterating until tasks are complete
 - **Business Handover:** Autonomous weekly audits generating "Monday Morning CEO Briefing"
 
 ## Directory Structure
@@ -49,7 +49,7 @@ Hackathon-0-Personal-AI-Employee-FTEs/
 
 | Component | Version | Purpose |
 |-----------|---------|---------|
-| [Claude Code](https://claude.com/product/claude-code) | Active subscription | Primary reasoning engine |
+| [Qwen Code](https://github.com/anthropics/qwen-code) | Active subscription | Primary reasoning engine |
 | [Obsidian](https://obsidian.md/download) | v1.10.6+ | Knowledge base & dashboard |
 | [Python](https://www.python.org/downloads/) | 3.13+ | Sentinel scripts & orchestration |
 | [Node.js](https://nodejs.org) | v24+ LTS | MCP servers & automation |
@@ -73,8 +73,8 @@ Hackathon-0-Personal-AI-Employee-FTEs/
 #   /Pending_Approval - Awaiting human approval
 #   /Approved       - Approved actions ready to execute
 
-# 2. Verify Claude Code
-claude --version
+# 2. Verify Qwen Code works
+qwen --version
 
 # 3. Set up Python virtual environment (UV recommended)
 # 4. Install Node.js dependencies for MCP servers
@@ -127,7 +127,7 @@ All agent skills follow the pattern in `.agents/skills/<skill-name>/`:
 
 For sensitive actions (payments, sending emails):
 
-1. Claude creates approval request in `/Pending_Approval/<ACTION>_<ID>.md`
+1. Qwen creates approval request in `/Pending_Approval/<ACTION>_<ID>.md`
 2. User reviews and moves file to `/Approved` or `/Rejected`
 3. Orchestrator detects approved files and triggers MCP action
 4. Result logged and task moved to `/Done`
@@ -186,7 +186,7 @@ class BaseWatcher(ABC):
 
 ## Contribution Guidelines
 
-1. All AI functionality should be implemented as [Agent Skills](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
+1. All AI functionality should be implemented as [Agent Skills](https://qwen.ai/docs/agents-and-tools/agent-skills/overview)
 2. Skills must include verification scripts
 3. Document server lifecycle (start/stop/verify)
 4. Preserve secrets: `.env`, tokens, sessions never sync via Git

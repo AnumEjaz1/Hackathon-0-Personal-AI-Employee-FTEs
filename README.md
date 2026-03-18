@@ -2,14 +2,14 @@
 
 > **Tagline:** Your life and business on autopilot. Local-first, agent-driven, human-in-the-loop.
 
-A personal AI employee that proactively manages your tasks using **Claude Code** as the reasoning engine and **Obsidian** as the dashboard. This is the **Bronze Tier** implementation - the foundation for autonomous task management.
+A personal AI employee that proactively manages your tasks using **Qwen Code** as the reasoning engine and the **`.qwen`** folder as the local dashboard. This is the **Bronze Tier** implementation - the foundation for autonomous task management.
 
 ## 📋 Bronze Tier Deliverables
 
 ✅ **Completed:**
-- [x] Obsidian vault with `Dashboard.md` and `Company_Handbook.md`
+- [x] `.qwen` folder with `Dashboard.md` and `Company_Handbook.md`
 - [x] One working Watcher script (File System monitoring)
-- [x] Claude Code integration for reading/writing to the vault
+- [x] Qwen Code integration for reading/writing to the vault
 - [x] Basic folder structure: `/Inbox`, `/Needs_Action`, `/Done`
 - [x] Orchestrator for managing watchers and processing items
 
@@ -18,7 +18,7 @@ A personal AI employee that proactively manages your tasks using **Claude Code**
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    EXTERNAL TRIGGERS                     │
-│         (File drops into Inbox folder)                   │
+│         (File drops into .qwen/Inbox folder)             │
 └────────────────────┬────────────────────────────────────┘
                      │
                      ▼
@@ -31,7 +31,7 @@ A personal AI employee that proactively manages your tasks using **Claude Code**
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────┐
-│                  OBSIDIAN VAULT (Local)                  │
+│                  .QWEN FOLDER (Local)                    │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │ /Inbox        → Drop files here                   │  │
 │  │ /Needs_Action → Items to process                  │  │
@@ -54,7 +54,7 @@ A personal AI employee that proactively manages your tasks using **Claude Code**
 │  │   Orchestrator (manages watchers, triggers AI)  │    │
 │  └─────────────────────────────────────────────────┘    │
 │  ┌─────────────────────────────────────────────────┐    │
-│  │   Claude Code (analyze, plan, write reports)    │    │
+│  │   Qwen Code (analyze, plan, write reports)      │    │
 │  └─────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -63,7 +63,7 @@ A personal AI employee that proactively manages your tasks using **Claude Code**
 
 ```
 Hackathon-0-Personal-AI-Employee-FTEs/
-├── AI_Employee_Vault/          # Obsidian vault
+├── .qwen/                      # Main vault folder
 │   ├── Inbox/                  # Drop files here for processing
 │   ├── Needs_Action/           # Items awaiting processing
 │   ├── Done/                   # Completed tasks
@@ -79,6 +79,7 @@ Hackathon-0-Personal-AI-Employee-FTEs/
 │   ├── base_watcher.py         # Base class for all watchers
 │   └── orchestrator.py         # Main orchestration process
 ├── requirements.txt            # Python dependencies
+├── verify_bronze.py            # Bronze tier verification script
 └── README.md                   # This file
 ```
 
@@ -89,53 +90,47 @@ Hackathon-0-Personal-AI-Employee-FTEs/
 | Component | Version | Purpose |
 |-----------|---------|---------|
 | [Python](https://www.python.org/downloads/) | 3.13+ | Watcher scripts & orchestration |
-| [Obsidian](https://obsidian.md/download) | v1.10.6+ | Knowledge base & dashboard |
-| [Claude Code](https://claude.com/product/claude-code) | Active subscription | Reasoning engine |
+| [Qwen Code](https://github.com/anthropics/qwen-code) | Active subscription | Reasoning engine |
 
 ### Installation
 
 1. **Clone or download this repository**
 
-2. **Open the vault in Obsidian**
-   ```
-   File → Open Folder → Select AI_Employee_Vault/
-   ```
-
-3. **Verify Python version**
+2. **Verify Python version**
    ```bash
    python --version  # Should be 3.13 or higher
    ```
 
-4. **Install dependencies (optional for Bronze Tier)**
+3. **Install dependencies (optional for Bronze Tier)**
    ```bash
    pip install -r requirements.txt
    ```
-   Note: Bronze Tier has no external dependencies. Dependencies are only needed for Silver/Gold tier features.
+   Note: Bronze Tier has no external dependencies.
 
 ### Running the AI Employee
 
 1. **Start the Orchestrator**
    ```bash
    # From the project root directory
-   python src/orchestrator.py AI_Employee_Vault
+   python src/orchestrator.py .qwen
    ```
 
 2. **Drop a file into the Inbox**
-   - Any file dropped into `AI_Employee_Vault/Inbox/` will be automatically detected
+   - Any file dropped into `.qwen/Inbox/` will be automatically detected
    - An action file will be created in `Needs_Action/`
    - The Dashboard will update in real-time
 
-3. **Process items with Claude Code**
+3. **Process items with Qwen Code**
    ```bash
-   # In a new terminal, navigate to the vault
-   cd AI_Employee_Vault
+   # In a new terminal, navigate to the .qwen folder
+   cd .qwen
    
-   # Invoke Claude Code to process pending items
-   claude "Check the Needs_Action folder and process any pending items. Create plans for each item."
+   # Invoke Qwen Code to process pending items
+   qwen "Check the Needs_Action folder and process any pending items. Create plans for each item."
    ```
 
 4. **Monitor the Dashboard**
-   - Open `Dashboard.md` in Obsidian
+   - Open `Dashboard.md` in any text editor or Markdown viewer
    - Watch it update as items are processed
 
 ### Stopping
@@ -146,17 +141,17 @@ Press `Ctrl+C` in the orchestrator terminal to gracefully shut down.
 
 ### How It Works
 
-1. **File Drop** → Drag any file into the `Inbox/` folder
+1. **File Drop** → Drag any file into the `.qwen/Inbox/` folder
 2. **Auto-Detection** → FileDropWatcher detects the new file every 5 seconds
 3. **Action File Created** → A markdown file with metadata is created in `Needs_Action/`
-4. **AI Processing** → Claude Code reads the action file and creates a plan
+4. **AI Processing** → Qwen Code reads the action file and creates a plan
 5. **Human Approval** → For sensitive actions, move files to `Pending_Approval/`
 6. **Execution** → Once approved, actions are executed and moved to `Done/`
 
 ### Folder Workflow
 
 ```
-Inbox/ → (Watcher detects) → Needs_Action/ → (Claude processes) → Plans/
+Inbox/ → (Watcher detects) → Needs_Action/ → (Qwen processes) → Plans/
                                                       ↓
                                               Pending_Approval/
                                                       ↓ (Human approves)
@@ -199,7 +194,7 @@ WatcherConfig("file_drop", "FileDropWatcher", check_interval=5),  # Check every 
 | Dashboard Updates | ✅ | Real-time status tracking |
 | Folder Structure | ✅ | Complete vault organization |
 | Company Handbook | ✅ | Rules of engagement defined |
-| Claude Code Integration | ⚠️ | Manual invocation (upgrade to Silver for auto) |
+| Qwen Code Integration | ⚠️ | Manual invocation (upgrade to Silver for auto) |
 | Approval Workflow | ⚠️ | Manual file movement (upgrade to Silver for auto) |
 | MCP Servers | ❌ | Silver tier feature |
 | Gmail/WhatsApp Watchers | ❌ | Silver tier feature |
@@ -220,7 +215,7 @@ To upgrade to Silver Tier, add:
 
 ### Orchestrator won't start
 - Ensure Python 3.13+ is installed
-- Check that `AI_Employee_Vault/` folder exists
+- Check that `.qwen/` folder exists
 - Verify no other process is locking the vault files
 
 ### Files not being detected
@@ -230,7 +225,7 @@ To upgrade to Silver Tier, add:
 
 ### Dashboard not updating
 - Orchestrator updates every 30 seconds
-- Refresh Obsidian: `Ctrl/Cmd + R`
+- Refresh your text editor
 - Check orchestrator is still running
 
 ## 📝 License
