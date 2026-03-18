@@ -1,0 +1,33 @@
+# AI Employee - Bronze Tier Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core dependencies (Bronze Tier - minimal)
+# No external dependencies required for basic file system watching
+
+# Optional: For advanced watchers (Silver/Gold tier)
+# Uncomment as needed:
+
+# Gmail Watcher
+# google-auth==2.25.2
+# google-auth-oauthlib==1.2.0
+# google-auth-httplib2==0.2.0
+# google-api-python-client==2.111.0
+
+# WhatsApp Watcher (Playwright-based)
+# playwright==1.40.0
+
+# File system watching (alternative to polling)
+# watchdog==3.0.0
+
+# HTTP requests for API calls
+# requests==2.31.0
+
+# YAML parsing for frontmatter
+# pyyaml==6.0.1
+
+# For Silver/Gold tier - MCP server development
+# mcp==1.0.0
+
+# Development dependencies
+# pytest==7.4.3
+# pytest-asyncio==0.21.1
